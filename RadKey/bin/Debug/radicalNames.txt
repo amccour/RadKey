@@ -1,0 +1,299 @@
+﻿#1
+一 one 
+｜ line
+丶 dot  
+ノ NO  .no
+乙 z  
+亅 hook
+
+#2
+二 two 
+亠 lid  
+人 hito v
+化 lhto lhito /
+个 thto thito ^
+乞 1hito
+儿 legs  
+入 enter entr 
+ハ eight 8 
+并 top8 2dot
+冂 ubox U
+冖 crown 
+冫 ice  
+几 desk  
+凵 cont  
+刀 sword  
+刈 RI  
+力 ka power 
+勹 wrap  
+匕 7
+匚 box  
+十 ten 0 
+卜 to  
+卩 seal  
+厂 cliff  
+厶 mu  
+又 and  
+マ ma  
+九 nine 9 
+ユ yu  
+乃 from  
+
+#3
+込 walk L
+口 mouth o
+囗 encl enclose O
+土 earth +
+士 man
+夂 winter  
+夕 twil twilight sunset evening
+大 big  
+女 woman  
+子 child ? ko
+宀 roof
+寸 inch shrine time
+小 small  
+尚 3dot  
+尢 lame  
+尸 flag  
+屮 sprout  
+山 mount W
+川 river  
+巛 lrvr lriver 
+工 e  
+已 self r5 rev5 S
+巾 cloth w 
+干 dry T 
+幺 thread y 
+广 dcliff  
+廴 stride  
+廾 H  
+弋 crmny ceremony 
+弓 bow  
+ヨ yo  
+彑 phed pighead 
+彡 three 3 mi
+彳 step  
+忙 lhrt lheart 
+扎 lhnd lhand 
+汁 lwtr lwater 
+犯 ldog  
+艾 grass  
+邦 rb b 
+阡 lb B 
+也 G nari 
+亡 urn  
+及 reach  
+久 while 
+
+#4 
+老 old 
+心 heart f 
+戈 spear  
+戸 door  
+手 hand t 
+支 branch  
+攵 whip  
+文 lit literature 
+斗 dip  
+斤 axe R 
+方 kata  
+无 nai1  
+日 sun  
+曰 say  
+月 moon  
+木 tree  
+欠 yawn  
+止 stop  
+歹 death
+殳 weapon wepn deskand 
+比 comp compare hihi
+毛 fur  
+氏 clan  
+气 steam  
+水 water  
+火 fire  
+杰 4dot  
+爪 claw  
+父 father  
+爻 mix  
+爿 wood  
+片 slice K
+牛 cow  
+犬 dog  
+礼 ne  
+王 king  
+元 base  
+井 well #
+勿 mono m
+尤 superb  
+五 five 5 
+屯 ton  
+巴 tomoe comma
+毋 must sea ocean
+
+#5
+玄 dark  
+瓦 title  
+甘 sweet  
+生 life  
+用 use  
+田 field  
+疋 bolt  
+疔 sick  
+癶 tent  
+白 white  
+皮 skin  
+皿 dish  
+目 eye  
+矛 pike  
+矢 arrow  
+石 rock stone 
+示 show  
+禹 ytg  
+禾 2tree  
+穴 hole  
+立 stand  
+初 new  
+世 age  
+巨 huge  
+冊 book  
+母 mom  
+買 net  
+牙 fang  
+
+#6
+瓜 melon  
+竹 bamboo  
+米 light  
+糸 yarn Y 
+缶 jar  
+羊 sheep  
+羽 wing  
+而 rake  
+耒 plow  
+耳 ear  
+聿 brush write kaku
+肉 meat  
+自 mizukara 3white 
+至 arrive  
+臼 mortar  
+舌 tongue  
+舟 boat  
+艮 yoku good
+色 color  
+虍 tiger  
+虫 bug  
+血 blood  
+行 go  
+衣 robe  
+西 west  
+
+#7
+臣 omi hime retainer
+見 see  
+角 horn  
+言 iu  
+谷 valley  
+豆 bean  
+豕 pig  
+豸 cat  
+貝 shell  
+赤 red
+走 run  
+足 foot  
+身 body  
+車 car  
+辛 spice  
+辰 morning  
+酉 sake  
+釆 divide  
+里 village  
+舛 dance  
+麦 wheat  
+
+#8
+金 gold metal 
+長 long  
+門 gate M
+隶 slave  
+隹 dare D 
+雨 rain  
+青 blue  
+非 wrong  
+奄 cover  
+岡 hill  
+免 excuse  
+斉 qi  
+
+#9
+面 face  
+革 hide  
+韭 leek  
+音 sound  
+頁 page  
+風 wind  
+飛 fly  
+食 eat food 
+首 neck  
+香 smell  
+品 goods  
+
+#10
+馬 horse  
+骨 bone  
+高 tall  
+髟 hair  
+鬥 fight  
+鬯 herb  
+鬲 tripod  
+鬼 demon mahou
+竜 dragon  
+韋 tanned chigau
+
+#11
+魚 fish  
+鳥 bird  
+鹵 salt  
+鹿 deer  
+麻 hemp  
+亀 turtle  
+滴 drop  
+黄 yellow  
+黒 black  
+
+#12
+黍 millet
+黹 embr emboroider embroidery
+無 nai2
+歯 tooth  
+
+#13
+黽 frog  
+鼎 ding  
+鼓 drum  
+鼠 rat
+
+#14
+鼻 nose  
+齊 even  
+
+#17
+龠 flute  
+
+#kanji
+一亅口ヨ koto
+一木 hon
+口人个 ken
+九丶 ball baseball maru
+｜ノ一丶 un- non-
+
+#other
+々 noma rep
+ヶ small_ke
+
+#RESERVED -- Do not use these as radical names!
+[ [
+] ]
+@ @
+* *

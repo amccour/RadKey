@@ -1,0 +1,62 @@
+Usage:
+
+1. Define names for the radicals in the radicalNames.txt file. Separate each name with a space, 
+and make sure that you don't give the same name twice.
+
+2. Open RadKey.exe. 
+
+3. Type one of the radical names in the textbox labelled Radical Entry.
+
+4. After typing in the full radical name, hit the Enter key. The name will be replaced with the radical.
+
+5. Repeat this until all necessary radicals are entered.
+
+6. Hit Enter to get a list of matching kanji. 
+
+7. In the lower grid, use the arrow keys to highlight the kanji you want, and press Enter.
+
+8. The selected kanji is copied into the Selected Kanji box.
+
+9. Repeat as necessary. Ideally you want to look the selected kanji up in a full dictionary at this point.
+
+Other features:
+
+- You can enter a stroke count in the Strokes text box. This will cause only kanji matching the provided
+stroke count to be returned.
+
+- You can hit CTRL+J to toggle whether or not kanji without a frequency defined in KANJIDIC and a Jouyou grade of 9, 10, or undefined are displayed. They're hidden by default.
+
+- You can hit CTRL+F to toggle whether kanji in the bottom grid are sorted by stroke, or by frequency.
+
+- You can see some additional information about the highlighted kanji -- its radicals, strokes, frequency,
+and the on readings/kun readings/meanings, from KANJIDIC.
+
+Additional Keyboard Shortcuts:
+
+Anywhere:
+- CTRL+E - Put the cursor in the Radical Entry box.
+- CTRL+S - Put the cursor in the Selected Kanji box.
+- CTRL+W - Put the cursor in the Strokes box.
+- CTRL+R - Put the cursor in the kanji grid.
+
+- CTRL+J, CTRL+F - See above.
+
+- CTRL+Shift+C - Copy all of the kanji in the Selected Kanji box.
+- CTRL+Shift+K - Clear the Selected Kanji box.
+- CTRL+Shift+Z - Remove the last selected kanji from the Selected Kanji box.
+
+- CTRL+P - Toggled whether RadKey is always the topmost window displayed.
+
+- CTRL+SHIFT+Backspace - Maximized/minimized RadKey.
+
+When the cursor is in the Strokes textbox:
+- Space - Search for kanji.
+- Enter - Return to th Radical Entry textbox.
+
+When the cursor is in the kanji grid:
+- Space - Return to the Radical Entry textbox.
+- Ctrl+D - Copy the radicals from the highlighted kanji into the Radical Entry textbox (clears whatever else
+is already in it).
+
+Credits:
+This uses the EDict dictionary.

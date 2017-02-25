@@ -1,0 +1,310 @@
+﻿#1
+一 one floor ceiling
+｜ line
+丶 dot drop
+ノ no  
+乙 hook fishhook  
+亅 hook stick
+
+#2
+二 ni 2 two 
+亠 tophat  
+人 person hito
+化 lhto lhito lperson
+个 umbrella
+乞 1hito
+儿 legs  
+入 enter entr 
+ハ eight 8 
+并 horns puzzle
+冂 hood canopy belt
+冖 crown 
+冫 ice  
+几 wind  
+凵 cont shovel 
+刀 sword dagger saber
+刈 ri  
+力 power muscle
+勹 wrap bound
+匕 diced seven spoon
+匚 box  
+十 ten needle
+卜 rod divining  
+卩 stamp  
+厂 cliff drag
+厶 elbow  
+又 crotch  
+マ ma  
+九 nine baseball 
+ユ yu  
+乃 from fist 
+
+#3
+込 way road
+口 mouth o
+囗 encl enclose pent pentin
+土 ground soil dirt land
+士 samurai
+夂 walking  
+夕 evening
+大 big  
+女 woman  
+子 child ? ko
+宀 house
+寸 glue
+小 small little
+尚 spark candle resemblance owl
+尢 lame  
+尸 flag  
+屮 sprout  
+山 mount mountain
+川 river stream flood
+巛 lrvr lriver 
+工 craft 
+已 self snake
+巾 towel  
+干 dry clothesline
+幺 thread cocoon
+广 cave 
+廴 stretch tate
+廾 H twohands 2hands 
+弋 arrow 
+弓 bow  
+ヨ broo m 
+彑 phed pighead 
+彡 three shape
+彳 step  
+忙 lhrt lheart 
+扎 fingers
+汁 lwtr lwater 
+犯 dogpack
+艾 pole  
+邦 rb b citywalls walls
+阡 lb B pinnacle
+也 G nari 
+亡 urn deceased perish
+及 reach 
+久 while 
+
+#4 
+老 old 
+心 heart valentine 
+戈 fiesta  
+戸 door  
+手 hand t 
+支 branch  
+攵 taskmaster  
+文 sentence plaid
+斗 dip  
+斤 axe shaku shakuhachi rag
+方 kata direction compass
+无 nai1 waitress
+日 sun day
+曰 sayeth  
+月 moon flesh
+木 tree wood
+欠 yawn lack 
+止 stop footprint 
+歹 bone
+殳 missile
+比 comp compare hihi
+毛 fur  
+氏 clan family
+气 steam  
+水 water grains 
+火 fire  
+杰 4dot  
+爪 claw vulture 
+父 father  
+爻 mix  
+爿 wood  
+片 one-sided onesided K
+牛 cow  
+犬 dog  
+礼 ne  
+王 king scepter
+元 base  
+井 well #
+勿 mono m
+尤 superb  
+五 five 5 
+屯 ton  
+巴 tomoe comma
+毋 breasts
+
+#5
+玄 dark  
+瓦 title  
+甘 sweet basket
+生 life cell 
+用 use utilize screwdriver 
+田 field brain brains shoot sprout
+疋 zoo  
+疔 sick sickness caveman
+癶 tent teepee
+白 white dove
+皮 skin  
+皿 dish  
+目 eye eyeball
+矛 halberd   
+矢 drop lose dart
+石 rock stone 
+示 show  
+禹 ytg  
+禾 wheat cereal  
+穴 hole  
+立 stand standup vase
+初 cloak
+世 age  
+巨 huge  
+冊 book  
+母 mom  
+買 net  
+牙 fang tusk
+
+#6
+瓜 melon  
+竹 bamboo  
+米 rice usa americans  
+糸 yarn lineage
+缶 jar  
+羊 sheep  
+羽 wing  
+而 comb
+耒 plow  
+耳 ear  
+聿 brush write kaku
+肉 meat  
+自 onself nose nostrils
+至 arrive  
+臼 mortar staples window
+舌 tongue  
+舟 boat  
+艮 yoku good silver halo
+色 color  
+虍 tiger  
+虫 bug insect mushi
+血 blood  
+行 going go
+衣 garment  
+西 west  
+
+#7
+臣 slave retainer
+見 see  
+角 horn mosaic angle
+言 iu say saying speech words
+谷 valley  
+豆 bean beans tables
+豕 pig sow
+豸 cat  
+貝 shell oyster clam
+赤 red
+走 run  
+足 foot  leg
+身 body  
+車 car cart wagon vehicle
+辛 spice spicy
+辰 morning  
+酉 sake whiskey
+釆 divide  
+里 ri logic computer  
+舛 dance  
+麦 wheat  
+
+#8
+金 gold metal 
+長 long  
+門 gate gates
+隶 slave  
+隹 turkey
+雨 rain weather 
+青 blue  
+非 wrong un- jail
+奄 cover  
+岡 hill  
+免 excuse  
+斉 qi  
+
+#9
+面 face  
+革 hide  
+韭 leek  
+音 sound  
+頁 head  
+風 wind  
+飛 fly  
+食 eat food 
+首 neck  
+香 smell  
+品 goods  
+
+#10
+馬 horse  
+骨 skeleton  
+高 tall  
+髟 hair  
+鬥 fight  
+鬯 herb  
+鬲 tripod  
+鬼 demon ghost oni
+竜 dragon  
+韋 tanned locket
+
+#11
+魚 fish  
+鳥 bird  
+鹵 salt  
+鹿 deer  
+麻 hemp  
+亀 turtle  
+滴 drop  
+黄 yellow  
+黒 black  
+
+#12
+黍 millet
+黹 embr emboroider embroidery
+無 nai2
+歯 tooth  
+
+#13
+黽 frog  
+鼎 ding  
+鼓 drum  
+鼠 rat
+
+#14
+鼻 nose  
+齊 even  
+
+#17
+龠 flute  
+
+#kanji
+一亅口ヨ koto
+亅ヨ rake
+一木 hon
+口人个 ken
+九丶 round
+人丶 plow
+｜乞一 saw
+｜二并十 half
+｜ノ一丶 negative
+乙丶亠廴 Zorro
+日老 someone puppet
+一斤 hill
+人亠ノ丶 acorn log
+マ一亅 beforehand
+｜一二并 row
+亅一 hanger
+
+#other
+々 noma rep
+ヶ small_ke
+
+#RESERVED -- Do not use these as radical names!
+[ [
+] ]
+@ @
+* *
