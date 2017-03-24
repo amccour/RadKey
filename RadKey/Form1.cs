@@ -70,6 +70,8 @@ namespace RadKey
 
         List<Compound> compounds = new List<Compound>();
 
+
+
         // Variables used to track previous focus/results selection to make navigation easier.
         int lastResultFocus = -1;
         int lastCompoundResultFocus = -1;
@@ -500,7 +502,7 @@ namespace RadKey
             {
                 // Case 0: Throw out words shorter than the input string. 
                 if (word.ToString().Length >= pos + 1) // Adding 1 to pos because pos is the array position offset from zero.
-                {
+                {                  
                     // Case 1: See if the search string matches the word outright.
                     if (word.ToString()[pos].ToString() == matchOn)
                     {
@@ -569,8 +571,8 @@ namespace RadKey
                 return new List<Compound> {};
             }
             // Special case for searching by reading.
-            if(new Regex("[\\p{IsHiragana}\\p{IsKatakana}]").IsMatch(input) &&
-                !new Regex("[\\p{IsCJKUnifiedIdeographs}\\p{IsBasicLatin}]").IsMatch(input))
+            if(new Regex("[\\p{IsHiragana}]").IsMatch(input) &&
+                !new Regex("[\\p{IsCJKUnifiedIdeographs}\\p{IsKatakana}\\p{IsBasicLatin}]").IsMatch(input))
             {
                 wordList = buildWordListByReading(input);
             }
@@ -1246,6 +1248,10 @@ namespace RadKey
 
                         // Clear out old error if present.
                         messageBox.Text = "";
+
+                        // Add the search string to history.
+                        // Doing this here to stop adding the same search string multiple times/remove failed searches.
+                        SearchHistory.AddHistory(compoundEntry.Text);
                         
                     }
                     else
@@ -1309,6 +1315,15 @@ namespace RadKey
 
                 e.SuppressKeyPress = true;
                 e.Handled = true;
+            }
+            // History keys.
+            else if(e.KeyCode == Keys.PageDown)
+            {
+                compoundEntry.Text = SearchHistory.GetNextFromHistory();
+            }
+            else if(e.KeyCode == Keys.PageUp)
+            {
+                compoundEntry.Text = SearchHistory.GetLastFromHistory(compoundEntry.Text);
             }
 
         }

@@ -66,6 +66,7 @@ namespace RadKey
             temp = temp.Replace("GG", "ッG"); temp = temp.Replace("DD", "ッD"); temp = temp.Replace("ZZ", "ッZ");
             temp = temp.Replace("NN", "ンN"); temp = temp.Replace("RR", "ッR"); temp = temp.Replace("JJ", "ッJ");
             temp = temp.Replace("PP", "ッP"); temp = temp.Replace("BB", "ッB"); temp = temp.Replace("CC", "ッC");
+            temp = temp.Replace("FF", "ッF"); // Katakana apparently allows this.
 
             // Replace glides (this needs to happen before other y-line replacements)
             temp = temp.Replace("KY", "キ/Y"); temp = temp.Replace("GY", "ギ/Y");

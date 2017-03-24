@@ -47,6 +47,9 @@
     <Compile Include="DataLoad.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="History.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="KanaConversion.cs">
       <SubType>Form</SubType>
     </Compile>
