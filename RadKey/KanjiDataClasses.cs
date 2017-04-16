@@ -75,10 +75,10 @@ namespace RadKey
         public class Compound : IComparable
         {
             private string keb;
-            private string gloss;
+            private List<string> gloss;
             private List<string> reb;
 
-            public Compound(string _keb, string _gloss, List<string> _reb)
+            public Compound(string _keb, List<string> _gloss, List<string> _reb)
             {
                 keb = _keb;
                 gloss = _gloss;
@@ -90,7 +90,7 @@ namespace RadKey
                 return keb;
             }
 
-            public string definition()
+            public List<string> definition()
             {
                 return gloss;
             }
@@ -115,7 +115,7 @@ namespace RadKey
 
             public void addDefinition(string newDef)
             {
-                gloss = gloss + "; " + newDef;
+                gloss.Add(newDef);
             }
 
             public int CompareTo(object obj)

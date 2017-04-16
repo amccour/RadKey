@@ -208,7 +208,7 @@ namespace RadKey
             // Store temporary data for the next compound to load.
             List<string> nextKeb = new List<string>();
             List<string> nextReb = new List<string>();
-            string nextGloss = "";
+            List<string> nextGloss = new List<string>();
 
             bool uk = false;
             string miscTag = "";
@@ -234,7 +234,17 @@ namespace RadKey
                             case "gloss":
                                 JMDict.Read();
 
-                                if (nextGloss == "")
+                                if (miscTag != "")
+                                {
+                                    nextGloss.Add(JMDict.Value + " " + miscTag);
+                                    miscTag = "";
+                                }
+                                else
+                                {
+                                    nextGloss.Add(JMDict.Value);
+                                }
+
+                                /*if (nextGloss == "")
                                 {
                                     nextGloss = JMDict.Value;
                                 }
@@ -249,7 +259,7 @@ namespace RadKey
                                 {
                                     nextGloss = nextGloss + miscTag;
                                     miscTag = "";
-                                }
+                                }*/
                                 break;
                             case "misc":
                                 JMDict.Read();
@@ -299,7 +309,7 @@ namespace RadKey
 
                             nextKeb = new List<string>();
                             nextReb = new List<string>();
-                            nextGloss = "";
+                            nextGloss = new List<string>();
                             uk = false;
                             miscTag = "";
 

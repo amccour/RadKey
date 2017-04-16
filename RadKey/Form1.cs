@@ -1,62 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-
-
+using MovablePython;
 
 namespace RadKey
 {    
     public partial class RadKey : Form
     {
-
-        // Hotkey Registration Section
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-
-        // Hotkey Registration Section
-        enum KeyModifier
-        {
-            None = 0,
-            Alt = 1,
-            Control = 2,
-            Shift = 4,
-            WinKey = 8
-        }
-
-        // Hotkey Registration Section
-        protected override void WndProc(ref Message m)
-        {
-            RegisterHotKey(this.Handle, 0, (int)KeyModifier.Shift + (int)KeyModifier.Control, Keys.Back.GetHashCode());
-            
-            base.WndProc(ref m);
-
-            if (m.Msg == 0x0312)
-            {                                   // The id of the hotkey that was pressed.
-                if (this.WindowState == FormWindowState.Normal)
-                {
-                    this.WindowState = FormWindowState.Minimized;
-                    this.ShowInTaskbar = false;
-                    RadKeyNotifyIcon.Visible = true;
-                }
-                else if (this.WindowState == FormWindowState.Minimized)
-                {
-                    this.WindowState = FormWindowState.Normal;
-                    this.ShowInTaskbar = true;
-                    RadKeyNotifyIcon.Visible = false;
-                }
-            }
-        }
-
+        // Tray icon and hotkey.
+        private System.Windows.Forms.NotifyIcon RadKeyNotifyIcon;
+        private System.ComponentModel.ComponentResourceManager resources;
+        Hotkey restoreHotkey;
 
         // The following dictionaries/list contain the dictionary and graphical decomposition data from JMDict/Edict, 
         // as well as the user-defined radical codes.
@@ -94,15 +52,71 @@ namespace RadKey
         const string isSpecialPattern = "[\\*\\@\\[\\]]";
         const string mainKanaConversioPattern = "[\\@\\[\\]\\*aeiounAEIOUN\\P{IsBasicLatin}]";
 
+        // Constant default field values.
+        const int verticalFieldSpacing = 6;
+
+        const int defaultResultListHeight = 172;
+        const int defaultReadingBoxHeight = 49;
+
+        const int defaultResultListPosY = 177;
+
         public RadKey()
         {
-            InitializeComponent();         
+            // If running under windows, don't show this in the taskbar.
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                this.ShowInTaskbar = false;
+            }
+            InitializeComponent();
+            
+
             loadRadkfile();
             loadKanjiDic();
             loadKradfile();
             loadRadCodes();
             loadJMDict();
 
+            // Notify Icon creation can't be at the form level for mono compatability I guess?
+            // Same for HotKeys.
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                // Tray section.
+                this.RadKeyNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+                resources = new System.ComponentModel.ComponentResourceManager(typeof(RadKey));
+
+                this.RadKeyNotifyIcon.BalloonTipText = "RadKey";
+                this.RadKeyNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("RadKeyNotifyIcon.Icon")));
+                this.RadKeyNotifyIcon.Text = "RadKey";
+                this.RadKeyNotifyIcon.Visible = true;
+                this.RadKeyNotifyIcon.Click += new System.EventHandler(this.RadKeyNotifyIcon_Click);
+
+                // Hotkey section.
+                restoreHotkey = new Hotkey(Keys.Back, true, true, false, false);
+                restoreHotkey.Pressed += delegate
+                {
+                    if (this.WindowState == FormWindowState.Normal)
+                    {
+                        this.WindowState = FormWindowState.Minimized;
+                        RadKeyNotifyIcon.Visible = true;
+                    }
+                    else if (this.WindowState == FormWindowState.Minimized)
+                    {
+                        this.WindowState = FormWindowState.Normal;
+                        RadKeyNotifyIcon.Visible = false;
+                    }
+                };
+
+                if (!restoreHotkey.GetCanRegister(this))
+                {
+
+                }
+               else
+                {
+                    restoreHotkey.Register(this);
+                    IntPtr z = this.Handle;
+
+                }
+            }
         }
 
         private void toggleSortByFreq()
@@ -304,7 +318,7 @@ namespace RadKey
         private void showKanjiSelectionInfo()
         {
             // This also changes the font sizes in addition to updating the text.
-            meaningBox.Font = new Font(meaningBox.Font.FontFamily, (float)8.25);
+            meaningBox.Font = new Font(meaningBox.Font.FontFamily, (float)9);
             readingBox.Font = new Font(readingBox.Font.FontFamily, (float)11.25);
             
             KanjiData selected = kanjiDataDictionary[resultList.Text];
@@ -698,6 +712,11 @@ namespace RadKey
         
         private void entryField_KeyDown(object sender, KeyEventArgs e)
         {
+            // Regardless of the input, reset the default field sizes.
+            readingBox.Size = new Size(readingBox.Width, defaultReadingBoxHeight);
+            resultList.Size = new Size(resultList.Width, defaultResultListHeight);
+            resultList.Location = new Point(resultList.Location.X, defaultResultListPosY);
+            
             // Did the user hit space?
             if (e.KeyCode == Keys.Space)
             {
@@ -921,48 +940,89 @@ namespace RadKey
         }
 
 
-        
+
         // Minimize to system tray.
         private void RadKey_Resize(object sender, EventArgs e)
         {
-            if (FormWindowState.Minimized == this.WindowState)
-            {
-                RadKeyNotifyIcon.Visible = true;
-                this.ShowInTaskbar = false;
-            }
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {                
+               if (FormWindowState.Minimized == this.WindowState)
+                {
+                    RadKeyNotifyIcon.Visible = true;
 
-            else if (FormWindowState.Normal == this.WindowState)
-            {
-                RadKeyNotifyIcon.Visible = false;
+                }
+
+                else if (FormWindowState.Normal == this.WindowState)
+                {
+                    RadKeyNotifyIcon.Visible = false;
+                }
+                
             }
         }
 
-
         private void RadKeyNotifyIcon_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Normal;
-            this.ShowInTaskbar = true;
-            RadKeyNotifyIcon.Visible = false;
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                this.WindowState = FormWindowState.Normal;
+                RadKeyNotifyIcon.Visible = false;
+            }
         }
 
         // Unregister the hotkey.
         private void RadKey_FormClosing(object sender, FormClosingEventArgs e)
         {
-            UnregisterHotKey(this.Handle, 0); 
-        }
-
-
-        
-        
+            // Only do this stuff on Windows.
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                if (restoreHotkey.Registered)
+                {
+                    restoreHotkey.Unregister();
+                }
+            }
+        }             
 
         private void showCompoundSelectionInfo(Compound toDisplay)
         {
+            // For compounds, the definition goes in the readingBox and the pronunciations go in the meaningBox.            
+
             // This also changes the font sizes in addition to updating the text.
             meaningBox.Font = new Font(meaningBox.Font.FontFamily, (float)11.25);
             readingBox.Font = new Font(readingBox.Font.FontFamily, (float)9.5);
 
             meaningBox.Text = toDisplay.pronunciation();
-            readingBox.Text = toDisplay.definition();
+            readingBox.Text = "";
+            int defcount = 1;
+            foreach (string def in toDisplay.definition())
+            {
+                readingBox.Text = readingBox.Text 
+                    + defcount.ToString() + ". "
+                    + def
+                    + Environment.NewLine;
+                defcount++;
+            }
+
+            // Resize the reading box, result box, and move the result box.
+            int newHeight = defaultReadingBoxHeight;
+            if(defcount > 3)
+            {
+                newHeight = newHeight + ((defcount-1) * 10);
+            }
+
+            if (newHeight > defaultResultListHeight)
+            {
+                newHeight = defaultResultListHeight;
+                readingBox.ScrollBars = ScrollBars.Vertical;
+            }
+            else
+            {
+                readingBox.ScrollBars = ScrollBars.None;
+            }
+            readingBox.Size = new Size(readingBox.Size.Width, newHeight);
+            resultList.Location = new Point(resultList.Location.X,
+                verticalFieldSpacing + readingBox.Size.Height + readingBox.Location.Y);
+
+            resultList.Size = new Size(resultList.Size.Width, defaultResultListHeight - (resultList.Location.Y - defaultResultListPosY));
 
         }
 

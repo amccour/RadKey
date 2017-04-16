@@ -1,4 +1,6 @@
-﻿namespace RadKey
+﻿using System;
+
+namespace RadKey
 {
     partial class RadKey
     {
@@ -29,7 +31,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RadKey));
+            
             this.entryField = new System.Windows.Forms.TextBox();
             this.radLabel = new System.Windows.Forms.Label();
             this.selectedKanjiLabel = new System.Windows.Forms.Label();
@@ -40,7 +42,6 @@
             this.strokeBox = new System.Windows.Forms.TextBox();
             this.readingBox = new System.Windows.Forms.TextBox();
             this.meaningBox = new System.Windows.Forms.TextBox();
-            this.RadKeyNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.compoundEntry = new System.Windows.Forms.TextBox();
             this.ambiguousLabel = new System.Windows.Forms.Label();
             this.compoundsResults = new System.Windows.Forms.ListBox();
@@ -50,7 +51,8 @@
             // 
             // entryField
             // 
-            this.entryField.Location = new System.Drawing.Point(82, 6);
+            this.entryField.Font = new System.Drawing.Font("MS Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.entryField.Location = new System.Drawing.Point(82, 8);
             this.entryField.Name = "entryField";
             this.entryField.Size = new System.Drawing.Size(176, 20);
             this.entryField.TabIndex = 0;
@@ -77,10 +79,11 @@
             // 
             // selectedKanjiBox
             // 
+            this.selectedKanjiBox.Font = new System.Drawing.Font("MS Gothic", 8.5F);
             this.selectedKanjiBox.ImeMode = System.Windows.Forms.ImeMode.Hiragana;
-            this.selectedKanjiBox.Location = new System.Drawing.Point(82, 34);
+            this.selectedKanjiBox.Location = new System.Drawing.Point(82, 33);
             this.selectedKanjiBox.Name = "selectedKanjiBox";
-            this.selectedKanjiBox.Size = new System.Drawing.Size(286, 20);
+            this.selectedKanjiBox.Size = new System.Drawing.Size(286, 19);
             this.selectedKanjiBox.TabIndex = 2;
             this.selectedKanjiBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.selectedKanjiBox_KeyDown);
             this.selectedKanjiBox.Leave += new System.EventHandler(this.selectedKanjiBox_Leave);
@@ -89,13 +92,13 @@
             // resultList
             // 
             this.resultList.ColumnWidth = 60;
-            this.resultList.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.resultList.Font = new System.Drawing.Font("MS Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.resultList.FormattingEnabled = true;
-            this.resultList.ItemHeight = 25;
+            this.resultList.ItemHeight = 21;
             this.resultList.Location = new System.Drawing.Point(6, 177);
             this.resultList.MultiColumn = true;
             this.resultList.Name = "resultList";
-            this.resultList.Size = new System.Drawing.Size(362, 179);
+            this.resultList.Size = new System.Drawing.Size(362, 172);
             this.resultList.TabIndex = 3;
             this.resultList.SelectedIndexChanged += new System.EventHandler(this.resultList_SelectedIndexChanged);
             this.resultList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.resultList_KeyDown);
@@ -103,10 +106,11 @@
             // 
             // messageBox
             // 
+            this.messageBox.Font = new System.Drawing.Font("MS Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.messageBox.Location = new System.Drawing.Point(6, 60);
             this.messageBox.Name = "messageBox";
             this.messageBox.ReadOnly = true;
-            this.messageBox.Size = new System.Drawing.Size(362, 20);
+            this.messageBox.Size = new System.Drawing.Size(362, 19);
             this.messageBox.TabIndex = 5;
             this.messageBox.TabStop = false;
             // 
@@ -131,7 +135,7 @@
             // 
             // readingBox
             // 
-            this.readingBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.readingBox.Font = new System.Drawing.Font("MS Gothic", 11.5F);
             this.readingBox.Location = new System.Drawing.Point(6, 122);
             this.readingBox.Multiline = true;
             this.readingBox.Name = "readingBox";
@@ -142,6 +146,7 @@
             // 
             // meaningBox
             // 
+            this.meaningBox.Font = new System.Drawing.Font("MS Gothic", 8.5F);
             this.meaningBox.Location = new System.Drawing.Point(6, 86);
             this.meaningBox.Multiline = true;
             this.meaningBox.Name = "meaningBox";
@@ -149,21 +154,13 @@
             this.meaningBox.Size = new System.Drawing.Size(362, 30);
             this.meaningBox.TabIndex = 8;
             this.meaningBox.TabStop = false;
-            // 
-            // RadKeyNotifyIcon
-            // 
-            this.RadKeyNotifyIcon.BalloonTipText = "RadKey";
-            this.RadKeyNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("RadKeyNotifyIcon.Icon")));
-            this.RadKeyNotifyIcon.Text = "RadKey";
-            this.RadKeyNotifyIcon.Visible = true;
-            this.RadKeyNotifyIcon.Click += new System.EventHandler(this.RadKeyNotifyIcon_Click);
-            // 
+
             // compoundEntry
             // 
-            this.compoundEntry.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compoundEntry.Font = new System.Drawing.Font("MS Gothic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.compoundEntry.Location = new System.Drawing.Point(374, 27);
             this.compoundEntry.Name = "compoundEntry";
-            this.compoundEntry.Size = new System.Drawing.Size(154, 27);
+            this.compoundEntry.Size = new System.Drawing.Size(154, 24);
             this.compoundEntry.TabIndex = 9;
             this.compoundEntry.KeyDown += new System.Windows.Forms.KeyEventHandler(this.compoundEntry_KeyDown);
             this.compoundEntry.Leave += new System.EventHandler(this.compoundEntry_Leave);
@@ -179,12 +176,12 @@
             // 
             // compoundsResults
             // 
-            this.compoundsResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compoundsResults.Font = new System.Drawing.Font("MS Gothic", 15F);
             this.compoundsResults.FormattingEnabled = true;
-            this.compoundsResults.ItemHeight = 25;
+            this.compoundsResults.ItemHeight = 20;
             this.compoundsResults.Location = new System.Drawing.Point(374, 60);
             this.compoundsResults.Name = "compoundsResults";
-            this.compoundsResults.Size = new System.Drawing.Size(154, 254);
+            this.compoundsResults.Size = new System.Drawing.Size(154, 244);
             this.compoundsResults.TabIndex = 11;
             this.compoundsResults.SelectedIndexChanged += new System.EventHandler(this.compoundsResults_SelectedIndexChanged);
             this.compoundsResults.KeyDown += new System.Windows.Forms.KeyEventHandler(this.compoundResults_KeyDown);
@@ -259,7 +256,7 @@
         private System.Windows.Forms.TextBox strokeBox;
         private System.Windows.Forms.TextBox readingBox;
         private System.Windows.Forms.TextBox meaningBox;
-        private System.Windows.Forms.NotifyIcon RadKeyNotifyIcon;
+        //private System.Windows.Forms.NotifyIcon RadKeyNotifyIcon;
         private System.Windows.Forms.TextBox compoundEntry;
         private System.Windows.Forms.Label ambiguousLabel;
         private System.Windows.Forms.ListBox compoundsResults;
