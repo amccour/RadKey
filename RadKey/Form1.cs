@@ -13,7 +13,6 @@ namespace RadKey
     {
         // Tray icon and hotkey.
         private System.Windows.Forms.NotifyIcon RadKeyNotifyIcon;
-        private System.ComponentModel.ComponentResourceManager resources;
         Hotkey restoreHotkey;
 
         // The following dictionaries/list contain the dictionary and graphical decomposition data from JMDict/Edict, 
@@ -52,275 +51,33 @@ namespace RadKey
         const string isSpecialPattern = "[\\*\\@\\[\\]]";
         const string mainKanaConversioPattern = "[\\@\\[\\]\\*aeiounAEIOUN\\P{IsBasicLatin}]";
 
-        // Constant default field values.
-        const int verticalFieldSpacing = 6;
 
-        const int defaultResultListHeight = 172;
-        const int defaultReadingBoxHeight = 49;
-
-        const int defaultResultListPosY = 177;
 
         public RadKey()
         {
-            // If running under windows, don't show this in the taskbar.
+            InitializeComponent();                     
+
+            // Initialize OS-specific components.
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
-                this.ShowInTaskbar = false;
+                RadKey.OSSpecific.Windows.InitializeComponent(this);
+                restoreHotkey = RadKey.OSSpecific.Windows.CreateRestoreHotkey(this);
             }
-            InitializeComponent();
-            
+            else
+            {
+                RadKey.OSSpecific.Linux.InitializeComponent(this);
+            }
 
             loadRadkfile();
             loadKanjiDic();
             loadKradfile();
             loadRadCodes();
             loadJMDict();
-
-            // Notify Icon creation can't be at the form level for mono compatability I guess?
-            // Same for HotKeys.
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-            {
-                // Tray section.
-                this.RadKeyNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-                resources = new System.ComponentModel.ComponentResourceManager(typeof(RadKey));
-
-                this.RadKeyNotifyIcon.BalloonTipText = "RadKey";
-                this.RadKeyNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("RadKeyNotifyIcon.Icon")));
-                this.RadKeyNotifyIcon.Text = "RadKey";
-                this.RadKeyNotifyIcon.Visible = true;
-                this.RadKeyNotifyIcon.Click += new System.EventHandler(this.RadKeyNotifyIcon_Click);
-
-                // Hotkey section.
-                restoreHotkey = new Hotkey(Keys.Back, true, true, false, false);
-                restoreHotkey.Pressed += delegate
-                {
-                    if (this.WindowState == FormWindowState.Normal)
-                    {
-                        this.WindowState = FormWindowState.Minimized;
-                        RadKeyNotifyIcon.Visible = true;
-                    }
-                    else if (this.WindowState == FormWindowState.Minimized)
-                    {
-                        this.WindowState = FormWindowState.Normal;
-                        RadKeyNotifyIcon.Visible = false;
-                    }
-                };
-
-                if (!restoreHotkey.GetCanRegister(this))
-                {
-
-                }
-               else
-                {
-                    restoreHotkey.Register(this);
-                    IntPtr z = this.Handle;
-
-                }
-            }
-        }
-
-        private void toggleSortByFreq()
-        {
-            // Set lastRadString/lastCompoundString to nothing, so that you can regenerate results easily.
-            lastRadString = "";
-            lastSubmittedCompoundString = "";
-
-            if (sortByFreq == false)
-            {
-                sortByFreq = true;
-                messageBox.Text = "Now sorting by frequency only.";
-                frequencySortCB.Checked = true;
-            }
-            else
-            {
-                sortByFreq = false;
-                messageBox.Text = "Now sorting by stroke count and frequency.";
-                frequencySortCB.Checked = false;
-            }
-        }
-
-        private void toggleNoLowFreq()
-        {
-            // Set lastRadString to nothing, so that you can regenerate results easily.
-            lastRadString = "";
-
-            if (noLowFreq == false)
-            {
-                noLowFreq = true;
-                messageBox.Text = "Now filtering out low frequency kanji.";
-                includeLowFreqCB.Checked = false;
-            }
-            else
-            {
-                noLowFreq = false;
-                messageBox.Text = "Now including low frequency kanji.";
-                includeLowFreqCB.Checked = true;
-            }
-        }         
-                
-        // Given a string containing radicals and English text, find the first occurence of English text, 
-        // look up a radical associated with it, and replace the English text with the radical.
-        private Tuple<string, int> getRadical(string input, int originalStart, out bool success)
-        {
-            // If the input is empty, return it as is.
-            if (input == "")
-            {
-                success = false;
-                return Tuple.Create(input, 0);
-            }
-            // Parse the input string to find the first occurence of English text, where English text is
-            // defined as text NOT in the dictionary.
-            int start = -1;
-            int end = -1;
-
-            // First, get the start position.
-            for (int x = 0; x < input.Length; x++)
-            {
-                // See if the character at the current position is English text or *.
-                if (!Regex.IsMatch(input[x].ToString(), isSpecialPattern))
-                {
-                    if (Regex.IsMatch(input[x].ToString(), isLatinPattern))
-                    {
-                        start = x;
-                        end = x; // End is set here too. This will stop one-character radical names from being ignored.
-                        break;
-                    }
-                }
-            }
-
-            // If the user only sent radicals/reserved characters, start will still be -1.
-            // Return the original start position.
-            if (start == -1)
-            {
-                success = false;
-                return Tuple.Create(input, originalStart);
-            }
-
-            // Next, get the end position.
-            // NOTE TO SELF: Is there a more elegant way to do this?
-            for (end = start; end < input.Length; end++) 
-            {
-
-                if (Regex.IsMatch(input[end].ToString(), isNotLatinPattern))
-                {
-                    // The charcter at position 'end' is in the dictionary. Return one past the last valid English letter.
-                    break;
-                }
-
-                else if (Regex.IsMatch(input[end].ToString(), isSpecialPattern))
-                {
-                    break;
-                }
-
-            }
-
-            // Store the substring we want to use to look up the radical.
-            // Need to add 1 here to get the correct length.
-            string radicalLookup = input.Substring(start, end - start);
-
-            // Initialize the found radical to nothing.
-            string radical= "";
-
-            // First, make sure it's a valid lookup string.
-            if (radCodes.ContainsKey(radicalLookup))
-            {
-                radical = radCodes[radicalLookup];
-                success = true;
-            }
-            else
-            {
-                success = false;
-            }
-
-
-            // Then, insert it into original string and return that.
-            // If a radical was not found, this just removes the input text.
-            string temp = string.Concat(input.Substring(0, start), radical);
-
-            /*if (radical == "")
-            {
-                // If invalid text was entered, move the start position back by one. This is used to reset the cursor to the right place.
-                // Note that this MUST be done after the first part of the result string is built.
-                // Don't do this if start is at 0.
-                if (start > 0)
-                {
-                    start--;
-                }
-            }*/
-
-            // If end = the last character of input, we need to handle it differently.
-            int newSelectionStart;
-
-            // If the cursor was before the characters being replaced, no need to change it.
-            if(originalStart < start)
-            {
-                newSelectionStart = originalStart;
-            }
-            else
-            {
-                newSelectionStart = start + radical.Length;
-            }
-            
-            if (end == input.Length)
-            {
-                return Tuple.Create(temp, newSelectionStart);
-            }
-            else
-            {
-                return Tuple.Create(string.Concat(temp, input.Substring(end, input.Length - end)), newSelectionStart);
-            }
-
-        }
-
-        // Overloaded variant that doesn't need to track success/failure.
-        private Tuple<string, int> getRadical(string input, int originalStart)
-        {
-            bool ignore;
-            return getRadical(input, originalStart, out ignore);
-        }
-       
-        // Search for kanji based on radicals/strokes.
-        private void searchKanji()
-        {
-            // If the input criteria didn't change, just move the cursor back to the box.
-            int newStroke;
-            // StrokeBox content needs to be handled separately.
-            if (strokeBox.Text == "")
-            {
-                newStroke = -1;
-            }
-            else
-            {
-                newStroke = Int32.Parse(strokeBox.Text);
-            }
-            if ((entryField.Text == lastRadString) && (lastRadString != "") && newStroke == lastStroke && found == true)
-            {
-                resultList.Focus();
-                resultList.SelectedIndex = lastResultFocus;
-            }
-            else
-            {
-                // Get the kanji results and note the last input criteria.
-                lastRadString = entryField.Text;
-                if (strokeBox.Text != "")
-                {
-                    lastStroke = Int32.Parse(strokeBox.Text);
-                }
-                else
-                {
-                    lastStroke = -1;
-                }
-                getKanjiList();
-            }
         }
         
         // Shows info about the selected kanji in the message box.
         private void showKanjiSelectionInfo()
         {
-            // This also changes the font sizes in addition to updating the text.
-            meaningBox.Font = new Font(meaningBox.Font.FontFamily, (float)9);
-            readingBox.Font = new Font(readingBox.Font.FontFamily, (float)11.25);
-            
             KanjiData selected = kanjiDataDictionary[resultList.Text];
             messageBox.Text = string.Concat("Strokes: ", selected.strokes.ToString(), " :: Freq: ", selected.freq.ToString(),
                         " :: Rads: ", kanjiToRad[resultList.Text]);
@@ -482,154 +239,7 @@ namespace RadKey
         }
 
 
-        // Build wordlists in cases where only kana was used as input.
-        // Matches any words with reading starting with the provided input.
-        private List<Compound> buildWordListByReading(string matchOn)
-        {
-            List<Compound> matchList = new List<Compound>();
-            
-            foreach (Compound word in compounds)
-            {
-                if(word.hasReadingStartingWith(matchOn))
-                {
-                    matchList.Add(word);
-                }
-            }
 
-            return matchList;
-        }
-
-        // Build wordlists.
-        private List<Compound> buildMatchingWordList(string matchOn, List<Compound> lastMatches, int pos, bool isBracketed)
-        {
-            List<Compound> matchList = new List<Compound>();
-
-            // See if the string is all hiragana.
-            bool isHiraganaOnly = true;
-            foreach(char letter in matchOn)
-            {
-                isHiraganaOnly = isHiraganaOnly && new Regex("[\\p{IsHiragana}]").IsMatch(letter.ToString());
-            }
-
-            // Iterate over the radical input text string, and get all kanji matching any of those radicals.
-            foreach (Compound word in lastMatches)
-            {
-                // Case 0: Throw out words shorter than the input string. 
-                if (word.ToString().Length >= pos + 1) // Adding 1 to pos because pos is the array position offset from zero.
-                {                  
-                    // Case 1: See if the search string matches the word outright.
-                    if (word.ToString()[pos].ToString() == matchOn)
-                    {
-                        matchList.Add(word);
-                    }
-                    // Case 2: Bracketed text. Either radicals or hiragana.
-                    else if (isBracketed)
-                    {
-                        bool wordMatches = true;
-                        // Case 2a: String only contains hiragana. 
-                        if (isHiraganaOnly)
-                        {
-                            wordMatches = wordMatches && word.hasReadingContaining(matchOn);
-                        }
-                        // Case 2b: Assume it's radicals (if it's a mix of radicals, kanji, and kana, the match'll fail safely).
-                        else
-                        {
-                            foreach (char rad in matchOn)
-                            {
-                                // Checking the kanjiToRad dictionary is needed to stop the system from trying to look up a kana or symbol.
-                                if (kanjiToRad.ContainsKey(word.ToString()[pos].ToString()))
-                                {
-                                    wordMatches = wordMatches && kanjiToRad[word.ToString()[pos].ToString()].Contains(rad);
-                                }
-                                // Word is not a kanji at this position. Does not match.
-                                else
-                                {
-                                    wordMatches = false;
-                                }
-                            }
-                        }
-
-                        if (wordMatches)
-                        {                            
-                            matchList.Add(word);
-                        }
-                    }
-                    // Case 3: Wildcard.
-                    else if (matchOn == "*")
-                    {
-                        matchList.Add(word);
-                    }
-
-                    // Case 4: character is a loose radical. See if word[pos] contains that radical.
-                    // Checking the kanjiToRad dictionary is needed to stop the system from trying to look up a kana or symbol.
-                    else if (kanjiToRad.ContainsKey(word.ToString()[pos].ToString()))
-                    {
-                        if (kanjiToRad[word.ToString()[pos].ToString()].Contains(matchOn))
-                        {
-                            matchList.Add(word);
-                        }
-                    }
-                }
-            }
-
-            return matchList;
-        }
-
-        private List<Compound> matchCompound(string input)
-        {
-            List<Compound> wordList = new List<Compound>();
-
-            // Ignore blank input.
-            if(input == "")
-            {
-                return new List<Compound> {};
-            }
-            // Special case for searching by reading.
-            if(new Regex("[\\p{IsHiragana}]").IsMatch(input) &&
-                !new Regex("[\\p{IsCJKUnifiedIdeographs}\\p{IsKatakana}\\p{IsBasicLatin}]").IsMatch(input))
-            {
-                wordList = buildWordListByReading(input);
-            }
-            else 
-            { 
-                // Standard multi-radical/multi-kanji wordlist generation
-                wordList = compounds;
-
-                // Position of a given character in a compound. This CAN be different from x, in the for loop below.
-                int charPos = 0;
-
-                for(int x = 0; x < input.Length; x++) // input must have more than two characters. This will be checked elsewhere.
-                {
-                    // Bracketed text found. Get a substring.
-                    if(input[x] == '[')
-                    {
-                        // Check that the string doesn't end in a opening bracket.
-                        if(x+1 != input.Length)
-                        {
-                            int closingBracket = input.IndexOf(']', x);
-
-                            // If a closing bracket wasn't provided, just go to the end of the line.
-                            if(closingBracket < 0)
-                            {
-                                closingBracket = input.Length;
-                            }
-
-                            wordList = buildMatchingWordList(input.Substring(x + 1, closingBracket - (x + 1)), wordList, charPos, true);
-                            x = closingBracket;
-                            charPos++;
-                        }
-                    }
-                    else
-                    {
-                        wordList = buildMatchingWordList(input[x].ToString(), wordList, charPos, false);
-                        charPos++;
-                    }
-                }
-            }
-
-            wordList.Sort();
-            return wordList;
-        }
 
         private void RadKey_KeyDown(object sender, KeyEventArgs e)
         {
@@ -711,12 +321,7 @@ namespace RadKey
         }
         
         private void entryField_KeyDown(object sender, KeyEventArgs e)
-        {
-            // Regardless of the input, reset the default field sizes.
-            readingBox.Size = new Size(readingBox.Width, defaultReadingBoxHeight);
-            resultList.Size = new Size(resultList.Width, defaultResultListHeight);
-            resultList.Location = new Point(resultList.Location.X, defaultResultListPosY);
-            
+        {           
             // Did the user hit space?
             if (e.KeyCode == Keys.Space)
             {
@@ -939,33 +544,38 @@ namespace RadKey
             showKanjiSelectionInfo();
         }
 
-
+        // Hide the form on minimize.
+        // This prevents it leaving any stray titlebars on the screen on Windows.
+        private void HideOnMinimize(RadKey radKey)
+        {
+            if (radKey.WindowState == FormWindowState.Normal)
+            {
+                RadKeyNotifyIcon.Visible = false;
+                radKey.Visible = true;
+            }
+            else if (radKey.WindowState == FormWindowState.Minimized)
+            {
+                RadKeyNotifyIcon.Visible = true;
+                radKey.Visible = false;
+            }
+        }
 
         // Minimize to system tray.
         private void RadKey_Resize(object sender, EventArgs e)
         {
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-            {                
-               if (FormWindowState.Minimized == this.WindowState)
-                {
-                    RadKeyNotifyIcon.Visible = true;
-
-                }
-
-                else if (FormWindowState.Normal == this.WindowState)
-                {
-                    RadKeyNotifyIcon.Visible = false;
-                }
-                
+            {
+                HideOnMinimize(this);
             }
         }
 
-        private void RadKeyNotifyIcon_Click(object sender, EventArgs e)
+        private void RKNIClick(object sender, EventArgs e)
         {
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
+                this.Visible = true;
                 this.WindowState = FormWindowState.Normal;
-                RadKeyNotifyIcon.Visible = false;
+                RadKeyNotifyIcon.Visible = false;               
             }
         }
 
@@ -984,11 +594,9 @@ namespace RadKey
 
         private void showCompoundSelectionInfo(Compound toDisplay)
         {
-            // For compounds, the definition goes in the readingBox and the pronunciations go in the meaningBox.            
-
+            // NOTE: For compounds, the definition goes in the readingBox and the pronunciations go in the meaningBox.       
             // This also changes the font sizes in addition to updating the text.
-            meaningBox.Font = new Font(meaningBox.Font.FontFamily, (float)11.25);
-            readingBox.Font = new Font(readingBox.Font.FontFamily, (float)9.5);
+            
 
             meaningBox.Text = toDisplay.pronunciation();
             readingBox.Text = "";
@@ -1001,29 +609,6 @@ namespace RadKey
                     + Environment.NewLine;
                 defcount++;
             }
-
-            // Resize the reading box, result box, and move the result box.
-            int newHeight = defaultReadingBoxHeight;
-            if(defcount > 3)
-            {
-                newHeight = newHeight + ((defcount-1) * 10);
-            }
-
-            if (newHeight > defaultResultListHeight)
-            {
-                newHeight = defaultResultListHeight;
-                readingBox.ScrollBars = ScrollBars.Vertical;
-            }
-            else
-            {
-                readingBox.ScrollBars = ScrollBars.None;
-            }
-            readingBox.Size = new Size(readingBox.Size.Width, newHeight);
-            resultList.Location = new Point(resultList.Location.X,
-                verticalFieldSpacing + readingBox.Size.Height + readingBox.Location.Y);
-
-            resultList.Size = new Size(resultList.Size.Width, defaultResultListHeight - (resultList.Location.Y - defaultResultListPosY));
-
         }
 
         private bool inBrackets(string text, int pos)
@@ -1508,7 +1093,20 @@ namespace RadKey
             entryField.Focus();
         }
 
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
 
+        }
+
+        private void compoundsResults_Enter(object sender, EventArgs e)
+        {
+            Resizer.ExpandReadingBox(this);
+        }
+
+        private void resultList_Enter(object sender, EventArgs e)
+        {
+            Resizer.OriginalFieldSize(this);
+        }
     }
 }
 

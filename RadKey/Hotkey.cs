@@ -1,3 +1,6 @@
+// Credits: Taken from https://github.com/sq/NDexer/blob/master/Hotkey.cs
+// Modified to sent IntPtr.Zero instead of an actual windows handle. Necessary for taskbar hiding.
+
 using System;
 using System.Windows.Forms;
 using System.ComponentModel;
